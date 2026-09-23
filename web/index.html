@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>warawara</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: sans-serif;
+        }
+        canvas {
+            background-color: #000;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            cursor: none;
+        }
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            pointer-events: none;
+            font-size: 24px;
+            display: none;
+        }
+        #ui.visible {
+            display: block;
+        }
+        #ui > div {
+            margin-bottom: 4px;
+        }
+        #ui > div:last-child {
+            margin-bottom: 0;
+        }
+
+        #free-mode-exit-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 999px;
+            cursor: pointer;
+            z-index: 10;
+            display: none;
+        }
+        #free-mode-exit-button.visible {
+            display: block;
+        }
+        #free-mode-exit-button:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        #mute-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 999px;
+            cursor: pointer;
+            z-index: 10;
+            display: none;
+        }
+        #mute-button.visible {
+            display: block;
+        }
+        #mute-button:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        #title-screen {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            background: radial-gradient(circle at center, #2a2a4a 0%, #101018 80%);
+            z-index: 10;
+        }
+        #title-screen.hidden {
+            display: none;
+        }
+
+        #title-logo {
+            display: flex;
+            font-size: 96px;
+            font-weight: 900;
+            font-family: 'Segoe UI', 'Arial Rounded MT Bold', 'Comic Sans MS', sans-serif;
+            letter-spacing: 4px;
+            user-select: none;
+        }
+        #title-logo span {
+            display: inline-block;
+            animation: bounce 1.6s ease-in-out infinite;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.35);
+        }
+        #title-logo span:nth-child(1) { color: #ff3b3b; animation-delay: 0.0s; transform: rotate(-6deg); }
+        #title-logo span:nth-child(2) { color: #ff9f1c; animation-delay: 0.1s; transform: rotate(4deg); }
+        #title-logo span:nth-child(3) { color: #ffe135; animation-delay: 0.2s; transform: rotate(-4deg); }
+        #title-logo span:nth-child(4) { color: #4ade80; animation-delay: 0.3s; transform: rotate(6deg); }
+        #title-logo span:nth-child(5) { color: #38bdf8; animation-delay: 0.4s; transform: rotate(-5deg); }
+        #title-logo span:nth-child(6) { color: #818cf8; animation-delay: 0.5s; transform: rotate(5deg); }
+        #title-logo span:nth-child(7) { color: #e879f9; animation-delay: 0.6s; transform: rotate(-3deg); }
+        #title-logo span:nth-child(8) { color: #ff6ec7; animation-delay: 0.7s; transform: rotate(3deg); }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+            50% { transform: translateY(-18px) rotate(var(--r, 0deg)); }
+        }
+
+        #mode-select {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            user-select: none;
+        }
+        .mode-option {
+            padding: 10px 40px;
+            font-size: 20px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            border-radius: 999px;
+            cursor: pointer;
+            text-align: center;
+            letter-spacing: 1px;
+            transition: transform 0.1s ease, background 0.15s ease, color 0.15s ease;
+        }
+        .mode-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .mode-option.selected {
+            color: white;
+            background: linear-gradient(135deg, #38bdf8, #6366f1);
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        #start-button {
+            padding: 20px 64px;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #ff6ec7, #ff3b3b);
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #a3123f, 0 10px 20px rgba(0,0,0,0.4);
+            transition: transform 0.1s ease;
+            letter-spacing: 2px;
+        }
+        #start-button:hover {
+            transform: translateY(-2px) scale(1.05);
+        }
+        #start-button:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #a3123f, 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        #countdown {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+        #countdown.visible {
+            display: flex;
+        }
+        #countdown-number {
+            font-size: 220px;
+            font-weight: 900;
+            color: #ffe135;
+            text-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+            animation: pop 1s ease-out;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.2); opacity: 0; }
+            30% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        #gameover-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 64px;
+            gap: 32px;
+            z-index: 10;
+        }
+        #gameover-screen.visible {
+            display: flex;
+        }
+        #gameover-title {
+            font-size: 72px;
+            font-weight: 900;
+            color: #ffe135;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.6);
+            letter-spacing: 4px;
+            animation: pop 0.4s ease-out;
+        }
+        #restart-button {
+            padding: 16px 48px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #38bdf8, #6366f1);
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #3730a3, 0 8px 16px rgba(0,0,0,0.4);
+            transition: transform 0.1s ease;
+            letter-spacing: 1px;
+        }
+        #restart-button:hover {
+            transform: translateY(-2px) scale(1.05);
+        }
+        #restart-button:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #3730a3, 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        #score-history {
+            width: min(640px, 90vw);
+            max-height: 38vh;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 8px 16px;
+            box-sizing: border-box;
+        }
+        #score-history table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+            font-size: 15px;
+        }
+        #score-history th,
+        #score-history td {
+            padding: 5px 8px;
+            text-align: right;
+            white-space: nowrap;
+        }
+        #score-history th:nth-child(2),
+        #score-history td:nth-child(2),
+        #score-history th:nth-child(3),
+        #score-history td:nth-child(3) {
+            text-align: left;
+        }
+        #score-history thead th {
+            color: #ffe135;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+        }
+        #score-history tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.04);
+        }
+    </style>
+</head>
+<body>
+    <div id="title-screen">
+        <div id="title-logo">
+            <span>w</span><span>a</span><span>r</span><span>a</span><span>w</span><span>a</span><span>r</span><span>a</span>
+        </div>
+        <div id="mode-select">
+            <div class="mode-option" data-mode="free">Free mode</div>
+            <div class="mode-option" data-mode="normal">Normal mode</div>
+            <div class="mode-option" data-mode="dazzle">Dazzle mode</div>
+            <div class="mode-option" data-mode="expert">Expert mode</div>
+        </div>
+        <button id="start-button">START</button>
+    </div>
+    <div id="countdown"><div id="countdown-number"></div></div>
+    <button id="free-mode-exit-button">Back to Title</button>
+    <button id="mute-button">Mute</button>
+    <div id="gameover-screen">
+        <div id="gameover-title">Game Over</div>
+        <button id="restart-button">Back to Title</button>
+        <div id="score-history">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>mode</th>
+                        <th>warawara</th>
+                        <th>time</th>
+                        <th>score</th>
+                        <th>Total Point</th>
+                    </tr>
+                </thead>
+                <tbody id="score-history-body"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="ui">
+        <div id="warawara-count">warawara: 0</div>
+        <div id="time-count">Time: 0s</div>
+        <div id="score-count">score: 0</div>
+    </div>
+    <canvas id="gameCanvas"></canvas>
+    <script type="module" src="src/game.js"></script>
+</body>
+</html>
