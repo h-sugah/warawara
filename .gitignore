@@ -1,11 +1,19 @@
 # macOS
 .DS_Store
 
+# Claude Code project state that's local/session-specific, not shared config
+.claude/
+
 # Rust / Tauri build output (also covered by src-tauri/.gitignore, kept
 # here too so it's obvious without having to know about the nested file —
 # see CLAUDE.md: multi-GB, OS/arch-specific, regenerates from source)
 /src-tauri/target/
 /src-tauri/gen/schemas/
+
+# personal
+warehouse/
+AGENTS.md
+CLAUDE.md
 
 # Editors
 .vscode/
@@ -17,9 +25,3 @@ npm-debug.log*
 
 # Node (no package.json in this repo today, but harmless to have ready)
 node_modules/
-
-# Claude Code project state that's local/session-specific, not shared config
-.claude/.cc-writes/
-.claude/settings.local.json
-
-warehouse/
