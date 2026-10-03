@@ -2,9 +2,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
   "version": 1,
-  "serialNumber": "urn:uuid:aafd08b5-24ad-463b-8047-62b21cb55552",
+  "serialNumber": "urn:uuid:f02f6a49-049a-4daf-a26e-cb2966930d89",
   "metadata": {
-    "timestamp": "2026-10-03T08:40:10.021122000Z",
+    "timestamp": "2026-10-03T13:10:04.495984000Z",
     "tools": [
       {
         "vendor": "CycloneDX",
@@ -9304,16 +9304,16 @@
     },
     {
       "type": "library",
-      "bom-ref": "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin-log@2.9.2",
+      "bom-ref": "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin-log@2.10.0",
       "author": "Tauri Programme within The Commons Conservancy",
       "name": "tauri-plugin-log",
-      "version": "2.9.2",
+      "version": "2.10.0",
       "description": "Configurable logging for your Tauri app.",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "86f2e3c40b77fd1eb7f8e1b6900fb036aee2da1ea2d3783c91255a82c636649d"
+          "content": "850d1e8f27d96203b7e6e6da1a2bf034c10f465b64a17c97e06940c9006385bf"
         }
       ],
       "licenses": [
@@ -9321,7 +9321,7 @@
           "expression": "Apache-2.0 OR MIT"
         }
       ],
-      "purl": "pkg:cargo/tauri-plugin-log@2.9.2",
+      "purl": "pkg:cargo/tauri-plugin-log@2.10.0",
       "externalReferences": [
         {
           "type": "other",
@@ -9335,16 +9335,16 @@
     },
     {
       "type": "library",
-      "bom-ref": "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin@2.6.3",
+      "bom-ref": "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin@2.7.1",
       "author": "Tauri Programme within The Commons Conservancy",
       "name": "tauri-plugin",
-      "version": "2.6.3",
+      "version": "2.7.1",
       "description": "Build script and runtime Tauri plugin definitions",
       "scope": "excluded",
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "74be5dd4bed9afbd145e5716b5fa2ec28cbc29c34ffa61c258c9273d896c8020"
+          "content": "1140cf34a3b3b836a13103dcab17f18831d5cc3534cbd435dc01a5c6daa65aa2"
         }
       ],
       "licenses": [
@@ -9352,7 +9352,7 @@
           "expression": "Apache-2.0 OR MIT"
         }
       ],
-      "purl": "pkg:cargo/tauri-plugin@2.6.3",
+      "purl": "pkg:cargo/tauri-plugin@2.7.1",
       "externalReferences": [
         {
           "type": "website",
@@ -12841,7 +12841,7 @@
         "registry+https://github.com/rust-lang/crates.io-index#serde_json@1.0.151",
         "registry+https://github.com/rust-lang/crates.io-index#tauri@2.12.0",
         "registry+https://github.com/rust-lang/crates.io-index#tauri-build@2.7.1",
-        "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin-log@2.9.2"
+        "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin-log@2.10.0"
       ]
     },
     {
@@ -15076,7 +15076,7 @@
       ]
     },
     {
-      "ref": "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin-log@2.9.2",
+      "ref": "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin-log@2.10.0",
       "dependsOn": [
         "registry+https://github.com/rust-lang/crates.io-index#android_logger@0.15.1",
         "registry+https://github.com/rust-lang/crates.io-index#fern@0.7.1",
@@ -15088,13 +15088,13 @@
         "registry+https://github.com/rust-lang/crates.io-index#serde_repr@0.1.21",
         "registry+https://github.com/rust-lang/crates.io-index#swift-rs@1.0.8",
         "registry+https://github.com/rust-lang/crates.io-index#tauri@2.12.0",
-        "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin@2.6.3",
+        "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin@2.7.1",
         "registry+https://github.com/rust-lang/crates.io-index#thiserror@2.0.20",
         "registry+https://github.com/rust-lang/crates.io-index#time@0.3.55"
       ]
     },
     {
-      "ref": "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin@2.6.3",
+      "ref": "registry+https://github.com/rust-lang/crates.io-index#tauri-plugin@2.7.1",
       "dependsOn": [
         "registry+https://github.com/rust-lang/crates.io-index#anyhow@1.0.104",
         "registry+https://github.com/rust-lang/crates.io-index#glob@0.3.4",
