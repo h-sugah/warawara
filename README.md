@@ -54,7 +54,7 @@ The desktop app is a [Tauri](https://tauri.app) wrapper around the same game cod
 
 **Prerequisites:**
 
-- [Rust](https://rustup.rs) (stable toolchain)
+- [Rust](https://rustup.rs) (stable toolchain, **version 1.90 or newer**). If you already have Rust installed, run `rustup update stable` to make sure you meet this requirement.
 - The Tauri CLI: `cargo install tauri-cli --version "^2.0.0" --locked`
 - **macOS**: Xcode (the full app, not just the Command Line Tools)
 - **Windows**: Microsoft C++ Build Tools (the "Desktop development with C++" workload) and WebView2 (already included on most modern Windows installs)
